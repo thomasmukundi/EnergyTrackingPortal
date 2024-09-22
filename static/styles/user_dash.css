@@ -1,0 +1,47 @@
+.container-fluid {
+    padding: 20px;
+  }
+  
+  .greeting-section {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .card {
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    height: 220px; /* Adjust the height as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
+  .card-text.value {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .card-text.label {
+    font-size: 1em;
+    color: #777;
+  }
+  
+  .energy-card {
+    background-color: #f7f9fc;
+  }
+  
+  .water-card {
+    background-color: #eef5f9;
+  }
+  

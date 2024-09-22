@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body class="home">
+        <div class="container-fluid display-table">
+            <div class="row display-table-row">
+                <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
+                    <div class="logo">
+                        <a href="{{ url_for('routes.index') }}"><img src="../static/Images/userIcon.png" class="hidden-xs hidden-sm">
+                        </a>
+                    </div>
+                    <div class="navi">
+                        <ul>
+                            <li><a href="{{ url_for('routes.user_dashboard') }}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">User Dashboard</span></a></li>
+                            <li class="active"><a href="{{ url_for('routes.power_usage') }}"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Power Usage</span></a></li>
+                            <li><a href="{{ url_for('routes.data_entry') }}"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Record Data</span></a></li>
+                            <li><a href="{{ url_for('routes.history') }}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">History Data</span></a></li>
+                            <li><a href="{{ url_for('routes.recommendations') }}"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Recommendations</span></a></li>
+                            <li><a href="{{ url_for('routes.settings') }}"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Setting</span></a></li>
+                        </ul>
+                        
+                    </div>
+                </div>
+                <div class="col-md-10 col-sm-11 display-table-cell v-align">
+                    <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
+                    <div class="row">
+                        <header>
+                            <div class="col-sm-7">
+                                <nav class="navbar-default pull-left">
+                                    <div class="navbar-header">
+                                        <button type="button" class="navbar-toggle collapsed" data-toggle="offcanvas" data-target="#side-menu" aria-expanded="false">
+                                            <span class="sr-only">Toggle navigation</span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                        </button>
+                                    </div>
+                                </nav>
+                                
+                            </div>
+                            <div class="col-sm-12 text-right"> <!-- Adjusted class to 'text-right' -->
+                                <div class="header-rightside">
+                                    <ul class="list-inline header-top pull-right">
+                                        <li class="hidden-xs"><a href="{{ url_for('routes.settings') }}" class="add-project" data-toggle="modal">Settings</a></li>
+                                        <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
+                                        <li>
+                                            <a href="#" class="icon-info">
+                                                <i class="fa fa-bell" aria-hidden="true"></i>
+                                                <span class="label label-primary">3</span>
+                                            </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="../static/Images/userIcon.png" alt="user">
+                                                <b class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <div class="navbar-content">
+                                                        <span>{{ current_user.firstname }} {{ current_user.lastname }}</span>
+                                                        <p class="text-muted small">
+                                                            {{ current_user.email }}
+                                                        </p>
+                                                        <div class="divider">
+                                                        </div>
+                                                        <a href="{{ url_for('auth.logout') }}" class="view btn-sm active">Log Out</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </header>
+                    </div>
+                    
+                    <div class="user-dashboard" style="overflow-y: auto; max-height: 90vh;">
+                        <h1>Power Usage</h1>
+                        {% for energy_type, graphs in latest_graphs.items() %}
+                            {% if graphs.bar_graph_exists and graphs.line_graph_exists %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2>{{ energy_type|capitalize }} Usage</h2>
+                                    <div class="row">
+                                        <div class="col-md-5 col-sm-5 col-xs-12 gutter">
+                                            <img src="{{ url_for('static', filename='Images/' + graphs.bar_graph_filename) }}" alt="{{ energy_type|capitalize }} Bar Graph" style="width:100%; height:auto;">
+                                        </div>
+                                        <div class="col-md-7 col-sm-7 col-xs-12 gutter">
+                                            <img src="{{ url_for('static', filename='Images/' + graphs.line_graph_filename) }}" alt="{{ energy_type|capitalize }} Line Graph" style="width:100%; height:auto;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    
+                    
+                    <!--end of graphs-->
+                </div>
+            </div>
+    
+        </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
